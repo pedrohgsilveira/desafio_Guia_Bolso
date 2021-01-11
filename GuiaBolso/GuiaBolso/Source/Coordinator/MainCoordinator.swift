@@ -19,7 +19,10 @@ final class MainCoordinator: CategorySelectorService {
     }
     
     func start() {
-
+        let viewModel = CategoryListViewModel(requestManager: requestManager, coordinator: self)
+        let viewController = CategoryListViewController(viewModel: viewModel)
+        
+        navigationController.pushViewController(viewController, animated: true)
     }
     
     func selectCategory() {
