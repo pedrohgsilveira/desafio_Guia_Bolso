@@ -10,7 +10,9 @@ import UIKit
 extension UIView {
     
     func addAnchor(top: NSLayoutYAxisAnchor?, leading: NSLayoutXAxisAnchor?, trailing: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, padding: UIEdgeInsets = .zero, widht: CGFloat?, height: CGFloat?) {
-                
+        
+        self.translatesAutoresizingMaskIntoConstraints = false
+
         if let anchor = top {
             topAnchor.constraint(equalTo: anchor, constant: padding.top).isActive = true
         }

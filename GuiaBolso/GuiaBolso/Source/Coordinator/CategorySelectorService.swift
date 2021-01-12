@@ -8,5 +8,5 @@
 import Foundation
 
 protocol CategorySelectorService: Coordinator {
-    func selectCategory()
+    func selectCategory(response: JokeResponse)
 }

@@ -9,18 +9,19 @@ import UIKit
 
 final class CategoryListTableViewDelegate: NSObject, UITableViewDelegate {
     
-    private var didSelectCell: (CategoryListUITableViewCell) -> Void?
+    private var didSelectCell: (Int, CategoryListUITableViewCell) -> Void?
     
-    init(_ didSelectCell: @escaping (CategoryListUITableViewCell) -> Void) {
+    init(_ didSelectCell: @escaping (Int, CategoryListUITableViewCell) -> Void) {
         self.didSelectCell = didSelectCell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard let currencyCell = tableView.cellForRow(at: indexPath) as? CategoryListUITableViewCell else {
+        guard let cell = tableView.cellForRow(at: indexPath) as? CategoryListUITableViewCell else {
             return
         }
-        didSelectCell(currencyCell)
+        
+        didSelectCell(indexPath.row, cell)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

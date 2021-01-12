@@ -10,7 +10,7 @@ import UIKit
 
 final class CategoryListViewModel: CategoryListViewModeling {
     
-    var delegate: CategoryListViewModelDelegate?
+    var delegate: ViewModelDelegate?
     
     var categoryNames: [String] = [] {
         didSet {
@@ -20,11 +20,7 @@ final class CategoryListViewModel: CategoryListViewModeling {
         }
     }
     
-    private var selectedCategory: String = "" {
-        didSet {
-            fetchJokeFromCategory()
-        }
-    }
+    private var selectedCategory: String = "" 
     
     private var selectedJoke: JokeResponse?
     
@@ -53,17 +49,17 @@ final class CategoryListViewModel: CategoryListViewModeling {
         }
     }
     
-    func fetchJokeFromCategory() {
+    func fetchJokeFromCategory(completion: @escaping () -> Void) {
         guard let url = ChucknorrisAPI.category.url else {
             return
         }
         
         let jokeUrl = url + selectedCategory
-        
         self.requestManager.getRequest(url: jokeUrl, decodableType: JokeResponse.self) { [weak self] (result) in
             switch result {
             case .success(let result):
                 self?.selectedJoke = result
+                completion()
             case .failure(let error):
                 ErrorHandler().genericErrorHandling(title: "Error Fetching Response", message: error.localizedDescription)
             }
@@ -76,5 +72,17 @@ final class CategoryListViewModel: CategoryListViewModeling {
     
     func numberOfRows() -> Int {
         return categoryNames.count
+    }
+    
+    func pushToJokeViewController(index: Int) {
+        self.selectedCategory = categoryNames[index]
+        
+        fetchJokeFromCategory { [unowned self] in
+            if let response = self.selectedJoke {
+                DispatchQueue.main.async {
+                    self.coordinator.selectCategory(response: response)
+                }
+            }   
+        }
     }
 }

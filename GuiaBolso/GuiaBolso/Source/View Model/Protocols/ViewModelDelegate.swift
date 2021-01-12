@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol CategoryListViewModelDelegate: AnyObject {
+protocol ViewModelDelegate: AnyObject {
     func updateUI()
 }

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol CategoryListViewModeling {
-    var delegate: CategoryListViewModelDelegate? { get set }
+    var delegate: ViewModelDelegate? { get set }
     
     var categoryNames: [String] { get }
 }

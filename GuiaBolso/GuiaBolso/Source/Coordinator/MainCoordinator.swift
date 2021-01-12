@@ -25,7 +25,10 @@ final class MainCoordinator: CategorySelectorService {
         navigationController.pushViewController(viewController, animated: true)
     }
     
-    func selectCategory() {
+    func selectCategory(response: JokeResponse) {
+        let viewModel = JokeViewModel(requestManager: requestManager, jokeResponse: response)
+        let viewController = JokeViewController(viewModel: viewModel)
         
+        navigationController.pushViewController(viewController, animated: true)
     }
 }

@@ -10,6 +10,7 @@ import Foundation
 struct JokeResponse: Decodable {
     let value: String
     let categories: [String]
+    let icon_url: String
 }
 
 extension JokeResponse: Equatable {
